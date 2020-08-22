@@ -4,8 +4,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.app_hello.R
 import kotlinx.android.synthetic.main.row_course_item.view.*
-
-
 class CoursesAdapter(var courseList: List<Course>) :
     RecyclerView.Adapter<CoursesAdapter.CoursesViewHolder>() {
 

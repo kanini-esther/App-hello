@@ -6,6 +6,9 @@ import android.os.Bundle
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_registration.*
 import okhttp3.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class RegistrationActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,17 +41,19 @@ class RegistrationActivity : AppCompatActivity() {
     fun registerUser(requestBody: RequestBody) {
         var apiClient = ApiClient.buildService(ApiInterface::class.java)
         var registrationCall = apiClient.registerStudent(requestBody)
-        registrationCall.enqueue(object : Callback<RegistrationResponse> {
-            override fun onFailure(call: Call<RegistrationResponse>, t: Throwable) {
+        registrationCall.enqueue(object : Callback<RegistratonResponse> {
+            override fun onFailure(call: Call<RegistratonResponse>, t: Throwable) {
                 Toast.makeText(baseContext, t.message, Toast.LENGTH_LONG).show()
             }
 
             override fun onResponse(
-                call: Call<RegistrationResponse>,
-                response: Response<RegistrationResponse>
+                call: Call<RegistratonResponse>,
+                response: Response<RegistratonResponse>
             ) {
                 if (response.isSuccessful) {
-                    Toast.makeText(baseContext, response.body()?.message, Toast.LENGTH_LONG).show()
+                    val show: Any =
+                        Toast.makeText(baseContext, response.body()?.message, Toast.LENGTH_LONG)
+                            .show()
                     startActivity(Intent(baseContext, MainActivity::class.java))
                 } else {
                     Toast.makeText(baseContext, response.errorBody().toString(), Toast.LENGTH_LONG)
@@ -57,8 +62,4 @@ class RegistrationActivity : AppCompatActivity() {
             }
         })
     }
-}
-
-class RegistrationResponse {
-
 }
