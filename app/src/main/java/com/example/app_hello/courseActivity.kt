@@ -9,11 +9,10 @@ import kotlinx.android.synthetic.main.activity_course.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-
 class CoursesActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_course)
+        setContentView(R.layout.activity_courses)
 
         fetchCourses()
     }
@@ -25,7 +24,7 @@ class CoursesActivity : AppCompatActivity() {
         val apiClient = ApiClient.buildService(ApiInterface::class.java)
         val coursesCall = apiClient.getCourses("Bearer " + accessToken)
         coursesCall.enqueue(object : Callback<CoursesResponse> {
-            override fun onFailure(call: Call<CoursesResponse >, t: Throwable) {
+            override fun onFailure(call: Call<CoursesResponse>, t: Throwable) {
                 Toast.makeText(baseContext, t.message, Toast.LENGTH_LONG).show()
             }
 

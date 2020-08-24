@@ -1,5 +1,6 @@
 package com.example.app_hello
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -41,19 +42,17 @@ class RegistrationActivity : AppCompatActivity() {
     fun registerUser(requestBody: RequestBody) {
         var apiClient = ApiClient.buildService(ApiInterface::class.java)
         var registrationCall = apiClient.registerStudent(requestBody)
-        registrationCall.enqueue(object : Callback<RegistratonResponse> {
-            override fun onFailure(call: Call<RegistratonResponse>, t: Throwable) {
+        registrationCall.enqueue(object : Callback<RegistrationResponse> {
+            override fun onFailure(call: Call<RegistrationResponse>, t: Throwable) {
                 Toast.makeText(baseContext, t.message, Toast.LENGTH_LONG).show()
             }
 
             override fun onResponse(
-                call: Call<RegistratonResponse>,
-                response: Response<RegistratonResponse>
+                call: Call<RegistrationResponse>,
+                response: Response<RegistrationResponse>
             ) {
                 if (response.isSuccessful) {
-                    val show: Any =
-                        Toast.makeText(baseContext, response.body()?.message, Toast.LENGTH_LONG)
-                            .show()
+                    Toast.makeText(baseContext, response.body()?.message, Toast.LENGTH_LONG).show()
                     startActivity(Intent(baseContext, MainActivity::class.java))
                 } else {
                     Toast.makeText(baseContext, response.errorBody().toString(), Toast.LENGTH_LONG)
